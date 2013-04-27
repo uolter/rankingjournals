@@ -44,3 +44,13 @@ Then the order should be:
 2 | Journal B | 2.4
 
 
+##Carrying out the task
+
+All the sceanarios are coverd within the unit test RankHolderTest.
+
+The rankig object RankHolder is responsible to collect a list of journals and rank then by the score filtering out
+journls marked as review.
+
+This code is maven compliant and you can built it and run the unit test with
+
+    mvn clean compile test
