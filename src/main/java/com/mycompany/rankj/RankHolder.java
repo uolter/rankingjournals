@@ -1,38 +1,87 @@
 package com.mycompany.rankj;
 
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.mycompany.rankj.comparator.ScoreComparatorDesc;
 
+/*
+ * This is class is responsible to collect a set of journal and rank them
+ * based on their score.
+ */
 public class RankHolder {
 
-	private TreeSet<Journal> map;
+	private List<Journal> journals;
+	
+	// it's used as a flag. The list is sorted only when it's true
+	private Boolean rankUpdated = false;
 	
 	
 	public RankHolder() {
-		map = new TreeSet<Journal>(ScoreComparatorDesc.scoreComparator());
+		journals = new ArrayList<Journal>();
+		
 	}
 	
+	/*
+	 * Add a new journal in the list.
+	 */
 	public void put(Journal j) {
-		
-		map.add(j);
+		rankUpdated = true;
+		journals.add(j);
 	}
 	
-	
-	public Integer getRank(Journal j) {
+	/*
+	 * It ranks all the journals in the list
+	 */
+	private void rank() {
 		
-		Integer rank = map.headSet(j).size();	
-		return rank==null?0:map.size() - rank;
-	}
-	
-	
-	public void printAll() {
+		this.rankUpdated = false;
+		Collections.sort(this.journals, new ScoreComparatorDesc());
 		
-		for (Journal entry : map) {
-			System.out.print(this.getRank(entry));
-			System.out.println(" - " + entry);		
+		Integer _rank = 0;
+		Journal jPrev = null;
+		
+		for (Journal j : this.journals ) {
+			if(! j.isReview())
+				if(jPrev != null && jPrev.equals(j))
+					// same rank since the score is equals.
+					j.setRank(_rank++);
+				else
+					j.setRank(++_rank);
+			
+			jPrev = j;
 		}
 	}
-
+	
+	/*
+	 * given a journal it return it's rank in the list.
+	 */
+	public Integer getRank(Journal j) {
+		
+		if( rankUpdated )
+			rank();
+		
+		// ranked journal
+		if(journals.indexOf(j) >= 0)
+			return journals.get(journals.indexOf(j)).getRank();
+		
+		return 0;
+		
+	}
+	
+	/*
+	 * It shows on the standard output all the journal ranked.
+	 */
+	public void printAll() {
+		
+		if(rankUpdated)
+			rank();
+		
+		for (Journal entry : journals) {
+			if(!entry.isReview())
+				System.out.println(entry);
+		}
+	}
 }

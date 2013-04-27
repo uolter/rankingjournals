@@ -62,7 +62,7 @@ public class ScoreComparatorTest extends TestCase {
 		
 		System.out.println(listOfJournals);
 		
-		assertEquals(0, listOfJournals.indexOf(j1));
+		assertEquals(2, listOfJournals.indexOf(j2));
 		
 	}
 	

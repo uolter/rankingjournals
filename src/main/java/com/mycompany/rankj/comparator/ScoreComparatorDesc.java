@@ -13,12 +13,13 @@ public class ScoreComparatorDesc implements Comparator<Journal> {
 		
 		int ret = o2.getScore().compareTo(o1.getScore());
 		
+		/*
 		if(ret == 0) {
-			// journals have the same score => compare theis names
-			
+			// journals have the same score => compare theis names	
 			return o1.getName().compareTo(o2.getName());
 		}
-		
+		*/
+	
 		return ret;
 		 
 	}
