@@ -48,7 +48,7 @@ Then the order should be:
 
 All the sceanarios are coverd within the unit test RankHolderTest.
 
-The rankig object RankHolder is responsible to collect a list of journals and rank then by the score filtering out
+The rankig object RankHolder is responsible for collecting a list of journals and rank them by the score filtering out
 journls marked as review.
 
 This code is maven compliant and you can built it and run the unit test with
